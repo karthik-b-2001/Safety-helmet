@@ -8,3 +8,9 @@ If the value of the Accelerometer excceds a certain value, an email alert will b
 
 Circut Diagram:
 
+![image](https://user-images.githubusercontent.com/69049502/133926558-26a5680a-3a79-4ab3-9935-4dab7e66aa95.png)
+
+
+Alert Demo:
+
+![image](https://user-images.githubusercontent.com/69049502/133926576-926c40c4-2b0b-4eca-9faf-dd6a3d483557.png)
