@@ -1,0 +1,38 @@
+channelID = 1483349;
+readAPIKey = '1AKOLO8BG8TTFBV0';
+alertApiKey = ' TAKNJPM3R249BP9KJAQ1G';
+alertUrl="https://api.thingspeak.com/alerts/send";
+
+options = weboptions("HeaderFields", ["ThingSpeak-Alerts-API-Key", alertApiKey ]);
+
+alertSubject = sprintf("Safety helmet data");
+
+[data,~] = thingSpeakRead(channelID,'Fields',2, ...
+    'NumMinutes',4,'ReadKey',readAPIKey); 
+display(data)
+[loc,timeStamp] = thingSpeakRead(channelID,'Fields',1, ...
+    'NumMinutes',4,'ReadKey',readAPIKey,"OutputFormat","timetable");
+display(loc)
+t = loc.Latitude;
+t = char(t)
+
+    alertBody = strcat('NO Data',t)
+    try
+    webwrite(alertUrl , "body", alertBody, "subject", alertSubject, options);
+    fprintf("Sent message0");
+    catch someException
+    fprintf("Failed to send alert: %s\n", someException.message);
+    end
+    if(max(data)>160)
+        alertBody = strcat('Emergency',t)
+        display(alertBody)
+        try
+    webwrite(alertUrl , "body", alertBody, "subject", alertSubject, options);
+    fprintf("Sent message1");
+
+    catch someException
+    fprintf("Failed to send alert: %s\n", someException.message);
+    
+        end
+    end
+    
